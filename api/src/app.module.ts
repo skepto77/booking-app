@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import mongoConfig from './configs/mongo.config';
+import { HotelsModule } from './hotels/hotels.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
       useFactory: mongoConfig,
     }),
+    HotelsModule,
     UsersModule,
     AuthModule,
   ],
