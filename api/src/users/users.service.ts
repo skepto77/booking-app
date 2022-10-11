@@ -34,23 +34,36 @@ export class UsersService implements IUserService {
       ...dto,
       passwordHash: await hash(dto.password, salt),
     });
-    console.log('newUser', newUser);
 
     return await this.userModel.create(newUser);
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userModel.findOne({ email });
-    return user;
+    return await this.userModel.findOne({ email }).exec();
   }
 
   async findAll(params: SearchUserParams): Promise<User[]> {
-    return await this.userModel.find().select('-__v -createdAt -updatedAt');
+    const { limit = 100, offset = 0, ...rest } = params;
+
+    // search by email, name, contactPhone or return all items
+    const searchOptions =
+      Object.keys(rest).length !== 0
+        ? Object.entries(rest).map(([key, value]) => {
+            return { [key]: { $regex: value, $options: 'i' } };
+          })
+        : [{ $exists: true }];
+
+    return await this.userModel
+      .find()
+      .and(searchOptions)
+      .sort('field -createdAt')
+      .skip(+offset)
+      .limit(+limit)
+      .exec();
   }
 
   async findById(id: ID): Promise<User> {
-    const user = await this.userModel.findById(id);
-    return user;
+    return await this.userModel.findById(id).exec();
   }
 
   buildCreateUserResponse(user: IUser): IUserCreateResponse {
