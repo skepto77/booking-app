@@ -1,2 +1,5 @@
 *.env
-mongo-data-4.4
+mongo-data
+api/uploads/*
+tmp
+client
