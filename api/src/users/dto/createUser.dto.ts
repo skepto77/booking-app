@@ -1,5 +1,5 @@
 import { IsOptional, IsString } from 'class-validator';
-import { Role } from '../users.inteface';
+import { Role } from '../users.interface';
 
 export class createUserDto {
   @IsString()
@@ -13,8 +13,9 @@ export class createUserDto {
 
   @IsOptional()
   @IsString()
-  contactPhone?: string;
+  contactPhone: string;
 
   @IsString()
+  @IsOptional()
   role: Role;
 }
