@@ -10,7 +10,7 @@ import {
   IUserResponse,
   IUserService,
   SearchUserParams,
-} from './users.inteface';
+} from './users.interface';
 import { User, UserDocument } from './users.shema';
 import { genSalt, hash, compare } from 'bcryptjs';
 

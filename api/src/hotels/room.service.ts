@@ -1,6 +1,6 @@
-import { Injectable, Query } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema, Types } from 'mongoose';
 
 import { HotelRoom, HotelRoomDocument } from './room.shema';
 import { ID } from 'src/types/common.types';
@@ -38,6 +38,9 @@ export class HotelRoomService implements HotelRoomService {
   }
 
   async findById(id, isEnabled?: true) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new HttpException('Неверный ID номера', HttpStatus.BAD_REQUEST);
+    }
     return await this.roomModel.aggregate(query(id, isEnabled)).exec();
   }
 

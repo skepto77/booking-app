@@ -14,7 +14,7 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { IdValidationPipe } from 'src/pipes/idValidation.pipe';
-import { Role } from 'src/users/users.inteface';
+import { Role } from 'src/users/users.interface';
 import { createHotelDto } from './dto/createHotel.dto';
 import { createRoomDto } from './dto/createRoom.dto';
 import { updateHotelDto } from './dto/updateHotel.dto';
@@ -63,8 +63,8 @@ export class HotelsController {
   }
 
   @Get('common/hotel-rooms/:id')
-  async searchRoom(@Param() params) {
-    return await this.roomsService.findById(params);
+  async searchRoom(@Param('id', IdValidationPipe) id) {
+    return await this.roomsService.findById(id);
   }
 
   @Post('admin/hotel-rooms/')

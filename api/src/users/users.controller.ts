@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { createUserDto } from './dto/createUser.dto';
-import { IUser, Role, SearchUserParams } from './users.inteface';
+import { IUser, Role, SearchUserParams } from './users.interface';
 import { UsersService } from './users.service';
 
 @Controller()

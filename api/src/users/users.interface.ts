@@ -36,3 +36,7 @@ export type IClientCreateResponse = Omit<
   IUserCreateResponse,
   'role' | 'contactPhone'
 >;
+
+// export interface IExpressRequest extends Request {
+//   user?: User;
+// }
