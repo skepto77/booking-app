@@ -1,11 +1,5 @@
 import { Transform } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsMongoId,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class updateRoomDto {
   @IsOptional()
@@ -22,7 +16,7 @@ export class updateRoomDto {
 
   @IsOptional()
   @IsBoolean()
-  @Transform(({ value }) => value === 'true')
+  @Transform(({ value }) => value === 'true') // string to boolean
   isEnabled?: boolean;
 
   @IsOptional()

@@ -1,12 +1,10 @@
-import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model, Schema, Types } from 'mongoose';
-
+import mongoose, { Model, Types } from 'mongoose';
 import { HotelRoom, HotelRoomDocument } from './room.shema';
 import { ID } from 'src/types/common.types';
 import { createRoomDto } from './dto/createRoom.dto';
 import { updateRoomDto } from './dto/updateRoom.dto';
-import { query } from 'src/helpers/roomQuery';
 import { uploadFiles } from 'src/helpers/uploadFiles';
 
 @Injectable()
@@ -34,21 +32,21 @@ export class HotelRoomService implements HotelRoomService {
       )
       .exec();
 
-    return await this.roomModel.aggregate(query(room._id));
+    return await this.roomModel.aggregate(this.query(room._id));
   }
 
   async findById(id, isEnabled?: true) {
     if (!Types.ObjectId.isValid(id)) {
       throw new HttpException('Неверный ID номера', HttpStatus.BAD_REQUEST);
     }
-    return await this.roomModel.aggregate(query(id, isEnabled)).exec();
+    return await this.roomModel.aggregate(this.query(id, isEnabled)).exec();
   }
 
   async find(params): Promise<HotelRoom[]> {
     const { limit = 100, offset = 0, isEnabled, hotel } = params;
 
     return await this.roomModel
-      .aggregate(query(false, isEnabled, hotel))
+      .aggregate(this.query(false, isEnabled, hotel))
       .sort('field -id')
       .limit(+limit)
       .skip(+offset)
@@ -71,6 +69,58 @@ export class HotelRoomService implements HotelRoomService {
       )
       .exec();
 
-    return await this.roomModel.aggregate(query(updatedRoom._id)).exec();
+    return await this.roomModel.aggregate(this.query(updatedRoom._id)).exec();
+  }
+
+  query(roomId?, isEnabledValue?, hotelId?) {
+    roomId = roomId ? new mongoose.Types.ObjectId(roomId) : { $exists: true };
+    hotelId = hotelId
+      ? new mongoose.Types.ObjectId(hotelId)
+      : { $exists: true };
+    isEnabledValue =
+      isEnabledValue || isEnabledValue === 'true' ? true : { $exists: true }; // only isInabled or all items
+
+    console.log(
+      'roomId?, isEnabledValue?, hotelId?',
+      roomId,
+      isEnabledValue,
+      hotelId,
+    );
+    return [
+      {
+        $match: {
+          _id: roomId,
+          isEnabled: isEnabledValue,
+          hotel: hotelId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'hotels',
+          localField: 'hotel',
+          foreignField: '_id',
+          as: 'hotel',
+        },
+      },
+      {
+        $unwind: '$hotel',
+      },
+      {
+        $addFields: {
+          id: '$_id',
+          hotel: { id: '$hotel._id' },
+        },
+      },
+
+      {
+        $project: {
+          _id: 0,
+          __v: 0,
+          createdAt: 0,
+          updatedAt: 0,
+          hotel: { __v: 0, _id: 0, createdAt: 0, updatedAt: 0 },
+        },
+      },
+    ];
   }
 }

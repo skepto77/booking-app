@@ -1,10 +1,10 @@
-import { Injectable, Query } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Schema } from 'mongoose';
+import { Model } from 'mongoose';
 import { createHotelDto } from './dto/createHotel.dto';
 import { Hotel, HotelDocument } from './hotels.shema';
 import { IHotel, IHotelResponse, IHotelService } from './hotels.interface';
-import { ID } from 'src/types/common.types';
+import { ID } from '../types/common.types';
 import { updateHotelDto } from './dto/updateHotel.dto';
 
 @Injectable()
