@@ -19,7 +19,7 @@ export class RolesGuard implements CanActivate {
 
     const token = authorization.replace(/Bearer /, '');
     const payload = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
-    console.log('payload', payload);
+    // console.log('payload', payload);
 
     if (!payload.role) {
       throw new HttpException('Требуется авторизация', HttpStatus.UNAUTHORIZED);
@@ -29,7 +29,7 @@ export class RolesGuard implements CanActivate {
     if (!roles || roles.length === 0) {
       return true;
     }
-    console.log('roles', roles);
+    // console.log('roles', roles);
 
     const matchRoles = () => roles.includes(payload.role);
 
