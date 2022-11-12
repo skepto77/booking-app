@@ -3,3 +3,5 @@ mongo-data
 api/uploads/*
 tmp
 client
+nginx
+docker-compose.development.yml
