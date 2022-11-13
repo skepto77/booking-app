@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, Types } from 'mongoose';
-import { HotelRoom, HotelRoomDocument } from './room.shema';
+import { HotelRoom, HotelRoomDocument } from './room.sсhema';
 import { ID } from 'src/types/common.types';
 import { createRoomDto } from './dto/createRoom.dto';
 import { updateRoomDto } from './dto/updateRoom.dto';

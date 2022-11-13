@@ -1,5 +1,5 @@
 import { ID } from 'src/types/common.types';
-import { User } from './users.shema';
+import { User } from './users.sсhema';
 
 export interface SearchUserParams {
   limit: number;

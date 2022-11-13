@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { Reservation, ReservationDocument } from './reservations.shema';
+import { Reservation, ReservationDocument } from './reservations.sсhema';
 import {
   IReservation,
   ReservationDto,

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { createHotelDto } from './dto/createHotel.dto';
-import { Hotel, HotelDocument } from './hotels.shema';
+import { Hotel, HotelDocument } from './hotels.sсhema';
 import { IHotel, IHotelResponse, IHotelService } from './hotels.interface';
 import { ID } from '../types/common.types';
 import { updateHotelDto } from './dto/updateHotel.dto';

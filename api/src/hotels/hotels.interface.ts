@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose';
 import { ID } from 'src/types/common.types';
-import { Hotel } from './hotels.shema';
-import { HotelRoom } from './room.shema';
+import { Hotel } from './hotels.sсhema';
+import { HotelRoom } from './room.sсhema';
 
 export interface IHotelService {
   create(data: Partial<Hotel>): Promise<Hotel>;

@@ -4,7 +4,7 @@ import { compare } from 'bcryptjs';
 import { ID } from 'src/types/common.types';
 import { IUser } from 'src/users/users.interface';
 import { UsersService } from 'src/users/users.service';
-import { User } from 'src/users/users.shema';
+import { User } from 'src/users/users.sсhema';
 
 @Injectable()
 export class AuthService {

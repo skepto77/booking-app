@@ -4,7 +4,7 @@ import { HotelsModule } from 'src/hotels/hotels.module';
 import { UsersModule } from 'src/users/users.module';
 import { ReservationsController } from './reservations.controller';
 import { ReservationsService } from './reservations.service';
-import { Reservation, ReservationSchema } from './reservations.shema';
+import { Reservation, ReservationSchema } from './reservations.sсhema';
 
 @Module({
   imports: [

@@ -1,5 +1,5 @@
 import { ID } from 'src/types/common.types';
-import { Reservation } from './reservations.shema';
+import { Reservation } from './reservations.sсhema';
 
 export interface ReservationDto {
   user: ID;

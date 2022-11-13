@@ -11,7 +11,7 @@ import {
   IUserService,
   SearchUserParams,
 } from './users.interface';
-import { User, UserDocument } from './users.shema';
+import { User, UserDocument } from './users.sсhema';
 import { genSalt, hash, compare } from 'bcryptjs';
 
 @Injectable()

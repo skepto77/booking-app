@@ -3,8 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { HotelsController } from './hotels.controller';
 import { HotelRoomService } from './room.service';
 import { HotelsService } from './hotels.service';
-import { Hotel, HotelSchema } from './hotels.shema';
-import { HotelRoom, HotelRoomSchema } from './room.shema';
+import { Hotel, HotelSchema } from './hotels.sсhema';
+import { HotelRoom, HotelRoomSchema } from './room.sсhema';
 
 @Module({
   imports: [
