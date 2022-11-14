@@ -1,5 +1,4 @@
-import { IsMongoId, IsOptional, IsString } from 'class-validator';
-import mongoose, { ObjectId } from 'mongoose';
+import { IsOptional, IsString } from 'class-validator';
 
 export class createHotelDto {
   @IsString()

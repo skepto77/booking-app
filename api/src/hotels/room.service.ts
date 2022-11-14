@@ -6,15 +6,19 @@ import { ID } from 'src/types/common.types';
 import { createRoomDto } from './dto/createRoom.dto';
 import { updateRoomDto } from './dto/updateRoom.dto';
 import { uploadFiles } from 'src/helpers/uploadFiles';
+import { IHotelRoomService } from './hotels.interface';
 
 @Injectable()
-export class HotelRoomService implements HotelRoomService {
+export class HotelRoomService implements IHotelRoomService {
   constructor(
     @InjectModel(HotelRoom.name)
     private readonly roomModel: Model<HotelRoomDocument>,
   ) {}
 
-  async create(images: Array<Express.Multer.File>, dto: createRoomDto) {
+  async create(
+    images: Array<Express.Multer.File>,
+    dto: createRoomDto,
+  ): Promise<any> {
     const roomWithoutImages = await this.roomModel.create({
       ...dto,
       hotel: dto.hotelId,
@@ -35,14 +39,14 @@ export class HotelRoomService implements HotelRoomService {
     return await this.roomModel.aggregate(this.query(room._id));
   }
 
-  async findById(id, isEnabled?: true) {
+  async findById(id): Promise<any> {
     if (!Types.ObjectId.isValid(id)) {
       throw new HttpException('Неверный ID номера', HttpStatus.BAD_REQUEST);
     }
-    return await this.roomModel.aggregate(this.query(id, isEnabled)).exec();
+    return await this.roomModel.aggregate(this.query(id)).exec();
   }
 
-  async find(params): Promise<HotelRoom[]> {
+  async search(params): Promise<HotelRoom[]> {
     const { limit = 100, offset = 0, isEnabled, hotel } = params;
 
     return await this.roomModel
@@ -53,16 +57,17 @@ export class HotelRoomService implements HotelRoomService {
       .exec();
   }
 
-  async update(images: Array<Express.Multer.File>, dto: updateRoomDto, id: ID) {
+  async update(id: ID, data: updateRoomDto): Promise<any> {
     const room = await this.roomModel.findById(id).exec();
+    const { images } = data;
     const newFiles = await uploadFiles(images, room);
 
     const updatedRoom = await this.roomModel
       .findByIdAndUpdate(
         id,
         {
-          ...dto,
-          hotel: dto.hotelId,
+          ...data,
+          hotel: data.hotelId,
           images: [...room.images, ...newFiles],
         },
         { new: true },
@@ -77,15 +82,13 @@ export class HotelRoomService implements HotelRoomService {
     hotelId = hotelId
       ? new mongoose.Types.ObjectId(hotelId)
       : { $exists: true };
-    isEnabledValue =
-      isEnabledValue || isEnabledValue === 'true' ? true : { $exists: true }; // only isInabled or all items
 
-    console.log(
-      'roomId?, isEnabledValue?, hotelId?',
-      roomId,
-      isEnabledValue,
-      hotelId,
-    );
+    isEnabledValue =
+      isEnabledValue !== undefined
+        ? isEnabledValue === 'true'
+        : { $exists: true }; // isEnabled value or all items
+
+    console.log(isEnabledValue);
     return [
       {
         $match: {

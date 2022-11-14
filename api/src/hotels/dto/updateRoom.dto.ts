@@ -4,10 +4,6 @@ import { IsArray, IsBoolean, IsOptional, IsString } from 'class-validator';
 export class updateRoomDto {
   @IsOptional()
   @IsString()
-  title?: string;
-
-  @IsOptional()
-  @IsString()
   description?: string;
 
   @IsOptional()
@@ -22,5 +18,5 @@ export class updateRoomDto {
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  images?: Array<File | string>;
+  images?: Array<File | string | Express.Multer.File>;
 }

@@ -17,19 +17,19 @@ export interface SearchHotelsParams {
 export interface SearchRoomsParams {
   limit: number;
   offset: number;
-  title: string;
-  isEnabled?: true;
+  isEnabled: boolean;
 }
 
-export interface HotelRoomService {
+export interface IHotelRoomService {
   create(
     images: Express.Multer.File[],
     data: Partial<HotelRoom>,
   ): Promise<HotelRoom>;
-  findById(id: ID, isEnabled?: true): Promise<HotelRoom>;
+  findById(id: ID): Promise<HotelRoom>;
   search(params: SearchRoomsParams): Promise<HotelRoom[]>;
   update(id: ID, data: Partial<HotelRoom>): Promise<HotelRoom>;
 }
+// images: Array<Express.Multer.File>,
 
 export interface IHotel extends Hotel {
   _id?: ID;

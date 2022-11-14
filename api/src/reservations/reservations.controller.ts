@@ -37,10 +37,7 @@ export class ReservationsController {
     @User('id') user: string,
     @Body() dto: createReservationDto,
   ) {
-    const currentRoom = await this.hotelRoomService.findById(
-      dto.hotelRoom,
-      true,
-    );
+    const currentRoom = await this.hotelRoomService.findById(dto.hotelRoom);
     if (!currentRoom.length) {
       throw new HttpException(
         'Номер недоступен для бронирования',

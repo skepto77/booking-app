@@ -11,9 +11,6 @@ export class HotelRoom {
   hotel: mongoose.Schema.Types.ObjectId;
 
   @Prop()
-  title: string;
-
-  @Prop()
   description?: string;
 
   @Prop({ default: [] })

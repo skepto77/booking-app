@@ -59,7 +59,7 @@ export class HotelsController {
 
   @Get('common/hotel-rooms')
   async getRoom(@Query() params: SearchRoomsParams) {
-    return await this.roomsService.find(params);
+    return await this.roomsService.search(params);
   }
 
   @Get('common/hotel-rooms/:id')
@@ -87,8 +87,9 @@ export class HotelsController {
     @Param('id', IdValidationPipe) id: string,
     @UploadedFiles(new FileSizeValidationPipe())
     images: Array<Express.Multer.File>,
-    @Body() data: updateRoomDto,
+    @Body() body: updateRoomDto,
   ) {
-    return await this.roomsService.update(images, data, id);
+    const data = { ...body, images };
+    return await this.roomsService.update(id, data);
   }
 }
